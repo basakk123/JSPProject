@@ -5,9 +5,8 @@
     pageEncoding="UTF-8"%>
     
 <% 
-	// 1. DB 연동 처리
-	BoardDAO dao = new BoardDAO();
-	List<BoardVO> boardList = dao.getBoardList();
+	// 1. request 내장 객체에 등록된 검색 결과를 꺼낸다.
+	List<BoardVO> boardList = (List) request.getAttribute("boardList");
 	
 	// 2. 검색 결과를 이용한 응답 화면 구성
 %>
@@ -22,7 +21,7 @@
 <center>
 <h1>게시글 목록</h1>
 <h3><%= session.getAttribute("userName") %>님 환영합니다.</h3>
-<a href="Logout_proc.jsp">LOG-OUT</a>
+<a href="logout.do">LOG-OUT</a>
 <hr>
 <table border="1" cellpadding="0" cellspacing="0" width="800">
 <tr>
@@ -36,7 +35,7 @@
 <% for(BoardVO board : boardList){ %>
 <tr>
 	<td><%= board.getSeq() %></td>
-	<td><a href="getBoard.jsp?seq=<%= board.getSeq() %>"><%= board.getTitle() %></a></td>
+	<td><a href="getBoard.do?seq=<%= board.getSeq() %>"><%= board.getTitle() %></a></td>
 	<td><%= board.getWriter() %></td>
 	<td><%= board.getRegDate() %></td>
 	<td><%= board.getCnt() %></td>

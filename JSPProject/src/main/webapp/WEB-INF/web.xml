@@ -23,5 +23,14 @@
 		<filter-name>timeCheck</filter-name>
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
+	
+	<servlet>
+		<servlet-name>action</servlet-name>
+		<servlet-class>com.multicampus.web.DispatcherServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
 
 </web-app>
