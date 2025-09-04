@@ -21,7 +21,8 @@ public class BoardDAO {
 	private String board_update = "update board set title = ?, content =? where seq = ?";
 	private String board_delete = "delete from board where seq = ?";
 	private String board_get = "select * from board where seq = ?";
-	private String board_list = "select * from board order by seq desc";
+	private String board_list_t = "select * from board where title like '%'||?||'%' order by seq desc";
+	private String board_list_c = "select * from board where content like '%'||?||'%' order by seq desc";
 
 	// CRUD 관련 메서드
 	// 글 등록
@@ -96,11 +97,21 @@ public class BoardDAO {
 	}
 
 	// 글 목록 검색
-	public List<BoardVO> getBoardList() {
+	public List<BoardVO> getBoardList(BoardVO vo) {
 		List<BoardVO> boardList = new ArrayList<BoardVO>();
 		try {
 			conn = JDBCUtil.getConnection();
-			stmt = conn.prepareStatement(board_list);
+			
+			// 검색 조건에 따른 분기 처리
+			if(vo.getCondition().equals("title")) {
+				// 제목 검색
+				stmt = conn.prepareStatement(board_list_t);
+			} else if(vo.getCondition().equals("content")) {
+				// 내용 검색
+				stmt = conn.prepareStatement(board_list_c);
+			}
+			stmt.setString(1, vo.getKeyword());
+			
 			rs = stmt.executeQuery();
 			while (rs.next()) {
 				BoardVO board = new BoardVO();

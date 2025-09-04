@@ -19,6 +19,24 @@
 <h3>${userName }님 환영합니다.</h3>
 <a href="logout.do">LOG-OUT</a>
 <hr>
+
+<!-- 검색 UI 시작 -->
+<form action="getBoardList.do" method="get">
+<table border="1" cellpadding="0" cellspacing="0" width="800">
+<tr>
+<td align="right">
+	<select name="condition">
+		<option value="title">제목
+		<option value="content">내용
+	</select>
+	<input type="text" name="keyword"/>
+	<input type="submit" value="검색"/>
+</td>
+</tr>
+</table>
+</form>
+<!-- 검색 UI 종료 -->
+
 <table border="1" cellpadding="0" cellspacing="0" width="800">
 <tr>
 	<th bgcolor="orange" width="100">번호</th>
