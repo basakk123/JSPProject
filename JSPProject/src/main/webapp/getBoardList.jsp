@@ -1,15 +1,11 @@
-<%@page import="com.multicampus.biz.board.BoardVO"%>
-<%@page import="java.util.List"%>
-<%@page import="com.multicampus.biz.board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<% 
-	// 1. request 내장 객체에 등록된 검색 결과를 꺼낸다.
-	List<BoardVO> boardList = (List) request.getAttribute("boardList");
-	
-	// 2. 검색 결과를 이용한 응답 화면 구성
-%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
+
+<!-- 
+	JSTL(JSP Standard Tag Library) 이란?
+	JSP 파일에서 if, for, switch 등과 같은 자바 코드를 대체하기 위한 표준 태그
+-->
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -20,7 +16,7 @@
 <body>
 <center>
 <h1>게시글 목록</h1>
-<h3><%= session.getAttribute("userName") %>님 환영합니다.</h3>
+<h3>${userName }님 환영합니다.</h3>
 <a href="logout.do">LOG-OUT</a>
 <hr>
 <table border="1" cellpadding="0" cellspacing="0" width="800">
@@ -32,18 +28,29 @@
 	<th bgcolor="orange" width="100">조회수</th>
 </tr>
 
-<% for(BoardVO board : boardList){ %>
+<c:forEach var="board" items="${boardList}">
 <tr>
-	<td><%= board.getSeq() %></td>
-	<td><a href="getBoard.do?seq=<%= board.getSeq() %>"><%= board.getTitle() %></a></td>
-	<td><%= board.getWriter() %></td>
-	<td><%= board.getRegDate() %></td>
-	<td><%= board.getCnt() %></td>
-</tr>		
-<% } %>	
+	<td>${board.seq}</td>
+	<td><a href="getBoard.do?seq=${board.seq}">${board.title}</a></td>
+	<td>${board.writer}</td>
+	<td>${board.regDate}</td>
+	<td>${board.cnt}</td>
+</tr>
+</c:forEach>
 </table>
 
 <a href="insertBoard.html">글 등록 화면으로 이동</a>
 </center>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
